@@ -1155,7 +1155,7 @@ def mGetHdr(in_image, img_header, debug=False, hdu=None, status_file=None):
 
 
 def mHdr(object_or_location, width, out_file, system=None, equinox=None,
-          height=None, pix_size=None, rotation=None):
+          height=None, pix_size=None, rotation=None, band=None):
     '''
     Connects to the IRSA service HdrTemplate to create a header template based
     on a location, size, resolution and rotation.
@@ -1188,6 +1188,9 @@ def mHdr(object_or_location, width, out_file, system=None, equinox=None,
 
     rotation : float, optional
         Rotation of image; default is 0
+
+    band : str, optional
+        If the data is 2MASS, the correct MAGZP will be added to the header
     '''
     command = "mHdr"
     if system:
@@ -1200,6 +1203,8 @@ def mHdr(object_or_location, width, out_file, system=None, equinox=None,
         command += " -p %s" % str(pix_size)
     if rotation:
         command += " -r %s" % str(rotation)
+    if band:
+        command += " -t %s" % str(band)
     command += ' "' + str(object_or_location) + '"'
     command += " " + str(width)
     command += " " + str(out_file)
